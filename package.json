@@ -1,0 +1,17 @@
+{
+  "name": "sygnal-template",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^2.9.9"
+  },
+  "dependencies": {
+    "snabbdom-pragma": "^2.8.0",
+    "sygnal": "^1.0.0"
+  }
+}
