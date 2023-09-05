@@ -6,6 +6,10 @@ import { defineConfig } from 'vite';
 export default defineConfig({
    esbuild: {
      jsxFactory: `jsx`,
-     jsxInject: `import { jsx } from 'sygnal/jsx'`,
+     jsxFragment: 'Fragment',
+     jsxInject: `import { jsx, Fragment } from 'sygnal/jsx'`
+   },
+   server: {
+     force: true
    }
 });
