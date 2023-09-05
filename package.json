@@ -8,9 +8,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^2.9.9"
+    "terser": "^5.19.4",
+    "vite": "^4.4.9"
   },
   "dependencies": {
-    "sygnal": "^2.6.2"
+    "sygnal": "^2.6.3"
   }
 }
