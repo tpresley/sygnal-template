@@ -11,6 +11,6 @@
     "vite": "^2.9.9"
   },
   "dependencies": {
-    "sygnal": "^1.0.0"
+    "sygnal": "^2.6.2"
   }
 }
