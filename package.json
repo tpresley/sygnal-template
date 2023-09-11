@@ -1,7 +1,7 @@
 {
   "name": "sygnal-template",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -12,6 +12,6 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
-    "sygnal": "^2.6.3"
+    "sygnal": "^2.6.8"
   }
 }
