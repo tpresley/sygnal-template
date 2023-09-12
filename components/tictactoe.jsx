@@ -12,15 +12,19 @@ export default component({
 
   model: {
     // BOOTSTRAP is a special action that is called when the component is first mounted
-    BOOTSTRAP: (state, data) => ({ ...INITIAL_STATE }),
+    // - best practice for subcomponents is to return the initial state extended with the current state
+    BOOTSTRAP: (state, data) => ({ ...INITIAL_STATE, ...state }),
     CLICK:     (state, data) => {
       const { turn, board, winner } = state
 
-      if (winner !== false || board[parseInt(data)] !== '') {
+      const chosenSpot = parseInt(data)
+      const spotIsEmpty = board[chosenSpot] === ''
+
+      if (!(spotIsEmpty && winner === false)) {
         return ABORT
       }
 
-      const nextBoard = board.map((value, i) => i === parseInt(data) ? turn : value)
+      const nextBoard = board.map((value, currentSpot) => currentSpot === chosenSpot ? turn : value)
       const winOrTie  = findWinnerOrTie(nextBoard)
 
       if (winOrTie) {
