@@ -1,3 +1,5 @@
+'CLOCK COMPONENT'
+
 import { component, xs, classes } from "sygnal";
 
 import Digit from "./digit";

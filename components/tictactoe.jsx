@@ -1,3 +1,5 @@
+'TICTACTOE COMPONENT'
+
 import { component, ABORT } from 'sygnal'
 
 const INITIAL_BOARD = Array(9).fill('')

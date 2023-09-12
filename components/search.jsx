@@ -1,3 +1,5 @@
+'SEARCH COMPONENT'
+
 import { component, xs } from 'sygnal'
 
 const VALUES = [

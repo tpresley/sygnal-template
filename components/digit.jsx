@@ -1,3 +1,5 @@
+'DIGIT COMPONENT'
+
 import { component, classes } from "sygnal"
 
 // map numbers to which segments are displayed
