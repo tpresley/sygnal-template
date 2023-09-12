@@ -27,6 +27,12 @@ h1 {
   font-size: 2rem;
 }
 
+.show-code {
+  display: block;
+  clear: both;
+  margin: 10px;
+}
+
 .container.clock {
   background-color: #222;
   padding: 10px;
