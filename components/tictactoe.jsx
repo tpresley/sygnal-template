@@ -12,8 +12,7 @@ export default component({
 
   model: {
     // BOOTSTRAP is a special action that is called when the component is first mounted
-    // - best practice for subcomponents is to return the initial state extended with the current state
-    BOOTSTRAP: (state, data) => ({ ...INITIAL_STATE, ...state }),
+    BOOTSTRAP: (state, data) => ({ ...INITIAL_STATE }),
     CLICK:     (state, data) => {
       const { turn, board, winner } = state
 
