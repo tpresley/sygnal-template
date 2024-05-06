@@ -1,6 +1,6 @@
 'TICTACTOE COMPONENT'
 
-import { component, ABORT } from 'sygnal'
+import { ABORT } from 'sygnal'
 
 const INITIAL_BOARD = Array(9).fill('')
 const INITIAL_STATE = {
@@ -9,56 +9,51 @@ const INITIAL_STATE = {
   winner: false
 }
 
-export default component({
-  name: 'TICTACTOE',
-
-  model: {
-    // BOOTSTRAP is a special action that is called when the component is first mounted
-    BOOTSTRAP: (state, data) => ({ ...INITIAL_STATE }),
-    CLICK:     (state, data) => {
-      const { turn, board, winner } = state
-
-      const chosenSpot = parseInt(data)
-      const spotIsEmpty = board[chosenSpot] === ''
-
-      if (!(spotIsEmpty && winner === false)) {
-        return ABORT
-      }
-
-      const nextBoard = board.map((value, currentSpot) => currentSpot === chosenSpot ? turn : value)
-      const winOrTie  = findWinnerOrTie(nextBoard)
-
-      if (winOrTie) {
-        return { ...state, winner: winOrTie, board: nextBoard }
-      }
-
-      const nextTurn = turn === 'X' ? 'O' : 'X'
-
-      return { ...state, turn: nextTurn, board: nextBoard }
-    }
-  },
-
-  intent: ({ DOM }) => {
-    return {
-      BOOTSTRAP: DOM.select('.restart').events('click'),
-      CLICK:     DOM.select('.square').events('click').map(e => e.target.dataId)
-    }
-  },
-
-  view: ({ state }) => {
-    return (
-      <div className="tictactoe-container">
-        { <div className="turn">Current Turn: { state.turn }</div> }
-        { state.winner && <div className="winner">WINNER: { state.winner }</div> }
-        <div className="tictactoe">
-          { state.board?.map((mark, i) => (<div className="square" dataId={i}>{ mark }</div>)) }
-        </div>
-        <button className="restart">Restart</button>
+export default function TICTACTOE({ state }) {
+  return (
+    <div className="tictactoe-container">
+      { <div className="turn">Current Turn: { state.turn }</div> }
+      { state.winner && <div className="winner">WINNER: { state.winner }</div> }
+      <div className="tictactoe">
+        { state.board?.map((mark, i) => (<div className="square" dataId={i}>{ mark }</div>)) }
       </div>
-    )
-  }
+      <button className="restart">Restart</button>
+    </div>
+  )
+}
 
-})
+TICTACTOE.model = {
+  // BOOTSTRAP is a special action that is called when the component is first mounted
+  BOOTSTRAP: { STATE: (state, data) => ({ ...INITIAL_STATE }) },
+  CLICK: (state, data) => {
+    const { turn, board, winner } = state
+
+    const chosenSpot = parseInt(data)
+    const spotIsEmpty = board[chosenSpot] === ''
+
+    if (!(spotIsEmpty && winner === false)) {
+      return ABORT
+    }
+
+    const nextBoard = board.map((value, currentSpot) => currentSpot === chosenSpot ? turn : value)
+    const winOrTie  = findWinnerOrTie(nextBoard)
+
+    if (winOrTie) {
+      return { ...state, winner: winOrTie, board: nextBoard }
+    }
+
+    const nextTurn = turn === 'X' ? 'O' : 'X'
+
+    return { ...state, turn: nextTurn, board: nextBoard }
+  }
+}
+
+TICTACTOE.intent = ({ DOM }) => {
+  return {
+    BOOTSTRAP: DOM.select('.restart').events('click'),
+    CLICK:     DOM.select('.square').events('click').map(e => e.target.dataId)
+  }
+}
 
 
 // helper function to determine if there is a winner or a tie

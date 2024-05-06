@@ -1,6 +1,6 @@
 'SEARCH COMPONENT'
 
-import { component, xs } from 'sygnal'
+import { xs } from 'sygnal'
 
 const VALUES = [
   { value: '1', label: 'The Great Gatsby' },
@@ -12,48 +12,45 @@ const VALUES = [
   { value: '7', label: 'Old Man and the Sea'}
 ]
 
-export default component({
-  name: 'SEARCH',
+export default function SEARCH({ state }) {
+  const { filtered=[], typing } = state
+  const list = filtered.length
+    ? filtered.map(({ value, label }) => (<li key={ value }>{ label }</li>))
+    : (<li>No results</li>)
 
-  model: {
-    FOCUS: (state, data) => ({ ...state, typing: data }),
-    INPUT: (state, data) => ({ ...state, value: data }),
-    CLEAR: (state, data) => ({ ...state, value: '' })
-  },
+  return (
+    <div className="search">
+      <input type="text" value={ typing===true ? null : state.value } placeholder='Search' />
+      <button>Clear</button>
+      { filtered.length < VALUES.length && <span>{ filtered.length } title{ filtered.length !== 1 && 's' } found</span> }
+      <ul>{ list }</ul>
+    </div>
+  )
+}
 
-  intent: ({ DOM }) => {
-    const input  = DOM.select('input')
-    const button = DOM.select('button')
-    const focus$ = input.events('focus').mapTo(true)
-    const blur$  = input.events('blur').mapTo(false)
+SEARCH.model = {
+  BOOTSTRAP: () => ({ value: '' }),
+  FOCUS: (state, data) => ({ ...state, typing: data }),
+  INPUT: (state, data) => ({ ...state, value: data }),
+  CLEAR: (state, data) => ({ ...state, value: '' })
+}
 
-    return {
-      FOCUS: xs.merge(focus$, blur$),
-      INPUT: input.events('input').map(e => e.target.value),
-      CLEAR: button.events('click')
-    }
-  },
+SEARCH.intent = ({ DOM }) => {
+  const input  = DOM.select('input')
+  const button = DOM.select('button')
+  const focus$ = input.events('focus').mapTo(true)
+  const blur$  = input.events('blur').mapTo(false)
 
-  calculated: {
-    filtered: (state) => VALUES.filter(filterBooks(state))
-  },
-
-  view: ({ state }) => {
-    const { filtered=[], typing } = state
-    const list = filtered.length
-      ? filtered.map(({ value, label }) => (<li key={ value }>{ label }</li>))
-      : (<li>No results</li>)
-
-    return (
-      <div className="search">
-        <input type="text" value={ typing===true ? null : state.value } placeholder='Search' />
-        <button>Clear</button>
-        { filtered.length < VALUES.length && <span>{ filtered.length } title{ filtered.length !== 1 && 's' } found</span> }
-        <ul>{ list }</ul>
-      </div>
-    )
+  return {
+    FOCUS: xs.merge(focus$, blur$),
+    INPUT: input.events('input').map(e => e.target.value),
+    CLEAR: button.events('click')
   }
-})
+}
+
+SEARCH.calculated = {
+  filtered: (state) => VALUES.filter(filterBooks(state))
+}
 
 function filterBooks(state) {
   return ({ label }) => label.toLowerCase().includes(state.value?.toLowerCase())
