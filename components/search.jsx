@@ -1,7 +1,5 @@
 'SEARCH COMPONENT'
 
-import { xs } from 'sygnal'
-
 const VALUES = [
   { value: '1', label: 'The Great Gatsby' },
   { value: '2', label: 'Moby Dick' },
@@ -20,7 +18,7 @@ export default function SEARCH({ state }) {
 
   return (
     <div className="search">
-      <input type="text" value={ typing===true ? null : state.value } placeholder='Search' />
+      <input type="text" value={ state.value } placeholder='Search' />
       <button>Clear</button>
       { filtered.length < VALUES.length && <span>{ filtered.length } title{ filtered.length !== 1 && 's' } found</span> }
       <ul>{ list }</ul>
@@ -30,7 +28,6 @@ export default function SEARCH({ state }) {
 
 SEARCH.model = {
   BOOTSTRAP: () => ({ value: '' }),
-  FOCUS: (state, data) => ({ ...state, typing: data }),
   INPUT: (state, data) => ({ ...state, value: data }),
   CLEAR: (state, data) => ({ ...state, value: '' })
 }
@@ -38,11 +35,8 @@ SEARCH.model = {
 SEARCH.intent = ({ DOM }) => {
   const input  = DOM.select('input')
   const button = DOM.select('button')
-  const focus$ = input.events('focus').mapTo(true)
-  const blur$  = input.events('blur').mapTo(false)
 
   return {
-    FOCUS: xs.merge(focus$, blur$),
     INPUT: input.events('input').map(e => e.target.value),
     CLEAR: button.events('click')
   }

@@ -9,7 +9,7 @@ const TRANSITION    = '100ms'
 const DISPLAY_FILL  = '#AAA'
 
 export default function CLOCK({ state }) {
-  const { hour, pulse } = state;
+  const { hour, pulse } = state
 
   const flashingColon = (<div className={ classes({ off: !pulse }) }>:</div>)
 
@@ -40,13 +40,15 @@ CLOCK.model = {
 CLOCK.intent = () => ({ TICK: xs.periodic(1000).startWith(null) })
 
 CLOCK.calculated = {
-  hourDigits:   (state) => makeDigits(state.hour % 12),
+  hourDigits:   (state) => {
+    const hour = state.hour % 12
+    return makeDigits(hour || 12)
+  },
   minuteDigits: (state) => makeDigits(state.minute),
 }
 
 
 function makeDigits(number) {
-  if (number === 0) number = 12 
   return (number || '0').toString()
     .padStart(2, '0')
     .split('')
