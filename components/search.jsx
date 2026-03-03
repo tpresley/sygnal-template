@@ -33,12 +33,9 @@ SEARCH.model = {
 }
 
 SEARCH.intent = ({ DOM }) => {
-  const input  = DOM.select('input')
-  const button = DOM.select('button')
-
   return {
-    INPUT: input.events('input').map(e => e.target.value),
-    CLEAR: button.events('click')
+    INPUT: DOM.input('input').map(e => e.target.value),
+    CLEAR: DOM.click('button')
   }
 }
 

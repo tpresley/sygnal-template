@@ -76,5 +76,5 @@ APP.model = {
 }
 
 APP.intent = ({ DOM }) => ({
-  SHOWCODE: DOM.select('.show-code').events('click').map(e => e.target.dataId)
+  SHOWCODE: DOM.click('.show-code').map(e => e.target.dataId)
 })

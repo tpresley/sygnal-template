@@ -19,7 +19,7 @@ const SEGMENTS = {
   9: '1111011'
 }
 
-export default function DIGIT({ state, props }) {
+export default function DIGIT(props, state) {
   // get the required values from state and props
   // - HTML properties set on the component will be passed in as props here
   let { segments, padding, id } = state

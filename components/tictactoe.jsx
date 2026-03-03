@@ -50,8 +50,8 @@ TICTACTOE.model = {
 
 TICTACTOE.intent = ({ DOM }) => {
   return {
-    BOOTSTRAP: DOM.select('.restart').events('click'),
-    CLICK:     DOM.select('.square').events('click').map(e => e.target.dataId)
+    BOOTSTRAP: DOM.click('.restart'),
+    CLICK:     DOM.click('.square').map(e => e.target.dataId)
   }
 }
 

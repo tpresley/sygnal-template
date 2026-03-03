@@ -52,4 +52,5 @@ function makeDigits(number) {
   return (number || '0').toString()
     .padStart(2, '0')
     .split('')
+    .map((v, i) => ({id: i, value: v}))
 }
