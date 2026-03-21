@@ -1,23 +1,6 @@
-import { defineConfig } from 'vite';
-
-
-// https://vitejs.dev/config/
+import { defineConfig } from 'vite'
+import sygnal from 'sygnal/vite'
 
 export default defineConfig({
-  esbuild: {
-    jsxFactory: `jsx`,
-    jsxFragment: 'Fragment',
-    jsxInject: `import { jsx, Fragment } from 'sygnal/jsx'`
-  },
-  server: {
-    force: true
-  },
-  build: {
-    minify: 'terser',
-    terserOptions: {
-      mangle: {
-        reserved: ['Fragment'],
-      },
-    }
-  }
-});
+  plugins: [sygnal()],
+})
