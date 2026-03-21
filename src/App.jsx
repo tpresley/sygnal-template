@@ -10,7 +10,6 @@ import TaskItem from './components/TaskItem.jsx'
 function App({ state }) {
 
   return (
-    <>
     <div className="app">
       <header className="header">
         <div className="logo-row">
@@ -53,8 +52,6 @@ function App({ state }) {
         </footer>
       </main>
     </div>
-    <h1>Will this work?</h1>
-    </>
   )
 }
 
