@@ -33,9 +33,7 @@ TaskItem.intent = ({ DOM }) => ({
  * The parent (App) subscribes with EVENTS.select('TOGGLE_TASK').
  */
 TaskItem.model = {
-  TOGGLE: {
-    PARENT: (state) => state.id,
-  },
+  'TOGGLE | PARENT': (state) => state.id,
   DELETE: () => undefined,
 }
 
